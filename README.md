@@ -1,9 +1,11 @@
 # 体脂秤 · ScaleLink
 
-一个**纯 Java、零第三方依赖、蓝牙直连**的安卓体脂秤 App，用来替代又卡又重的京东健康。
+一个**纯 Java、零第三方依赖、BLE 广播直读**的安卓体脂秤 App，用来替代又卡又重的京东健康。
 
 不需要登录、不需要联网（云端同步可选）、不申请账号，装上就能称。
 
+[![Build](https://github.com/niu-15/ScaleLink/actions/workflows/build.yml/badge.svg)](https://github.com/niu-15/ScaleLink/actions/workflows/build.yml)
+[![Release](https://img.shields.io/badge/release-v3.15-3E5C6B)](https://github.com/niu-15/ScaleLink/releases/latest)
 [![minSdk](https://img.shields.io/badge/minSdk-21-3E5C6B)](https://developer.android.com/about/versions/lollipop)
 [![targetSdk](https://img.shields.io/badge/targetSdk-34-3E5C6B)](https://developer.android.com/about/versions/14)
 [![Java](https://img.shields.io/badge/Java-17-3E5C6B)](https://openjdk.org/projects/jdk/17/)
@@ -79,7 +81,7 @@
 
 ## 直接装
 
-懒得编译的话，仓库里带了一份现成的：**[dist/ScaleLink-3.15.apk](dist/ScaleLink-3.15.apk)**（340 KB，要求 Android 5.0+）。
+懒得编译的话，直接到 **[Releases](https://github.com/niu-15/ScaleLink/releases/latest)** 下载 `ScaleLink-3.15.apk`（340 KB，要求 Android 5.0+），仓库里也留了一份：[dist/ScaleLink-3.15.apk](dist/ScaleLink-3.15.apk)。
 
 装之前先确认你的秤是广播型的——打开 App 站在秤上，如果首页体重能跳到正确数字，就是它。
 
