@@ -4,6 +4,13 @@
 
 不需要登录、不需要联网（云端同步可选）、不申请账号，装上就能称。
 
+> **⚖️ 适用机型：京东 × 天晟体脂秤**
+>
+> **本项目就是为这台秤写的** —— 即配套「京东健康」App 的那款体脂秤（天晟出品、小米方案 ODM、广播型）。体重、阻抗、体成分算法、广播协议全部按这台秤实测抓包校准，也是目前**唯一真机验证通过**的机型。
+>
+> 别的体脂秤即使同属小米方案，也不保证能直接出数。**先确认你手上是不是这一台**，再往下看。
+
+[![实测机型](https://img.shields.io/badge/%E5%AE%9E%E6%B5%8B%E6%9C%BA%E5%9E%8B-%E4%BA%AC%E4%B8%9C%C3%97%E5%A4%A9%E6%99%9F-3E5C6B)](#支持哪些秤)
 [![Build](https://github.com/niu-15/ScaleLink/actions/workflows/build.yml/badge.svg)](https://github.com/niu-15/ScaleLink/actions/workflows/build.yml)
 [![Release](https://img.shields.io/badge/release-v3.15-3E5C6B)](https://github.com/niu-15/ScaleLink/releases/latest)
 [![minSdk](https://img.shields.io/badge/minSdk-21-3E5C6B)](https://developer.android.com/about/versions/lollipop)
@@ -24,7 +31,7 @@
 
 > **这台秤根本不需要"连接"。**
 
-它的蓝牙广播标着 `connectable=false`，任何 `connectGatt()` 都会在链路层超时（HCI 0x08）。但**实时体重、阻抗、秤内部时钟全都在厂商广播数据里**——扫描即测量。
+**京东 × 天晟体脂秤**的蓝牙广播标着 `connectable=false`，任何 `connectGatt()` 都会在链路层超时（HCI 0x08）。但**实时体重、阻抗、秤内部时钟全都在厂商广播数据里**——扫描即测量。
 
 ```
 10 FF C0 [cnt] [W1 W2] [I1 I2] [hh mm ss] [MAC × 6]
@@ -68,22 +75,32 @@
 
 ## 支持哪些秤
 
+**一句话：目前只有「京东 × 天晟体脂秤」实测可用。** 本项目的广播协议、体成分算法、站稳判定阈值，全部是按这台秤真机抓包调出来的；其余解析器属于兼容性尝试，没有真机验证过。
+
+| 机型 | 状态 |
+|---|---|
+| **京东 × 天晟体脂秤**（配套「京东健康」App，小米方案 ODM，广播型） | ✅ **唯一实测通过**，本项目就是为它写的 |
+| 其他小米 / 小米生态链体脂秤 | ⚠️ 小米方案解析已实现，但广播格式可能不同，未验证 |
+| 标准体重秤（BCS `0x181D`）及其他私有协议秤 | ⚠️ 代码里有解析器，未验证 |
+
+> 怎么确认手上是不是这台？打开 App 站上去，首页体重能跳到正确数字就是它。抓包核对方法见 **[tools/PROTOCOL-captured.md](tools/PROTOCOL-captured.md)**。
+
 内置 5 种协议解析器，按 GATT 服务 UUID 自动探测：
 
 | 协议 | 特征 |
 |---|---|
-| 广播直读 | 厂商广播 `0xFF`，标记字节 `0xC0`，末尾 MAC 校验 |
+| 广播直读 | 厂商广播 `0xFF`，标记字节 `0xC0`，末尾 MAC 校验（**京东 × 天晟实测走这条**） |
 | `XiaomiProtocol` | `ebe0ccb0` / `0xFE95`（小米体重秤方案，本项目实测机型即此方案 ODM 贴牌） |
 | `BcsProtocol` | 标准体重服务 `0x181D` / `0x2A9D` |
 | `Ffb0Protocol` / `Faa0Protocol` / `AfuProtocol` | 其他厂商私有协议 |
 
-**实测通过的只有一种**：天晟 × 京东健康体脂秤（小米方案 ODM，广播型）。其余协议是通用实现，没有真机验证过——如果你手上有别的秤，欢迎抓包提 issue 补上。
+如果你手上有别的秤，欢迎按 **[tools/README-hci-capture.md](tools/README-hci-capture.md)** 抓包提 issue 补上。
 
 ## 直接装
 
 懒得编译的话，直接到 **[Releases](https://github.com/niu-15/ScaleLink/releases/latest)** 下载 `ScaleLink-3.15.apk`（340 KB，要求 Android 5.0+），仓库里也留了一份：[dist/ScaleLink-3.15.apk](dist/ScaleLink-3.15.apk)。
 
-装之前先确认你的秤是广播型的——打开 App 站在秤上，如果首页体重能跳到正确数字，就是它。
+> ⚠️ **仅适用于「京东 × 天晟体脂秤」**（配套京东健康 App 的广播型秤）。别的秤装上大概率扫不到数据，别白折腾。
 
 ## 构建
 
