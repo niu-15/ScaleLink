@@ -1,0 +1,32 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.scale.link'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.scale.link'
+        minSdk 21
+        targetSdk 34
+        versionCode 18
+        versionName '3.15'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    // 零第三方依赖：全部使用 Android Framework API，确保离线可编译
+}
