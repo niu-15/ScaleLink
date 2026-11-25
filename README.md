@@ -88,7 +88,7 @@
 要求：JDK 17、Android SDK（compileSdk 34）。
 
 ```bash
-git clone https://github.com/<your-name>/ScaleLink.git
+git clone https://github.com/niu-15/ScaleLink.git
 cd ScaleLink
 ./gradlew assembleDebug
 # 产物：app/build/outputs/apk/debug/app-debug.apk
